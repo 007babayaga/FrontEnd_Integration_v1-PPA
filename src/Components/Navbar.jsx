@@ -1,14 +1,17 @@
 
 import { MdAccountCircle } from "react-icons/md";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 
 const Navbar = () => {
+    const [query] = useSearchParams();
+    const defaultSearchValue = query.get("text");
+
+    const[searchText,setSearchtext] = useState(defaultSearchValue || " ");
     const [menuOpen, setMenuOpen] = useState(false);
-    const[searchText,setSearchtext] = useState("");
     const navigate= useNavigate();
 
     const handleSearchClick = ()=>{

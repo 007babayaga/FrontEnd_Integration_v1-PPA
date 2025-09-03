@@ -2,6 +2,9 @@ import { useSearchParams } from "react-router"
 import { Navbar } from "../Components/Navbar"
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
+import { Paginator } from "../Components/Paginator";
+
+const LIMIT_PER_PAGE =10
 
 const SearchPage = ()=>{
 
@@ -10,16 +13,18 @@ const SearchPage = ()=>{
 
     const[loading,setLoading] = useState(false);
     const[products,setProducts] = useState([]);
-
+    const[total,setTotal] = useState(0);
+    const[page,setPage] = useState(1);
 
     const getData = async()=>{
         try{
             setLoading(true);
-            const response = await fetch(`http://localhost:3900/api/v1/products?q=${searchText}`,{
+            const response = await fetch(`http://localhost:3900/api/v1/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}`,{
                 method:"GET"
             })
             const result =  await response.json();
             console.log(result);
+            setTotal(result.data.total);
             setProducts(result.data.products);
         }
         catch(err){
@@ -32,7 +37,7 @@ const SearchPage = ()=>{
 
     useEffect(()=>{
         getData();
-    },[searchText]);
+    },[searchText,page]);
 
     return(
         <>
@@ -56,7 +61,15 @@ const SearchPage = ()=>{
                             <div className="shadow-lg rounded-2xl p-4 m-4 bg-white hover:shadow-2xl cursor-pointer transition-shadow duration-300" key={idx}>
                                 <h1 className="text-lg font-semibold mb-2">Item Name:{ele.title}</h1>
                                 <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded-md overflow-hidden">
-                                <img src={ele.imges?.[0]}/>
+                                    <div className="flex gap-2 overflow-x-auto h-full w-full">
+                                        {ele.images?.map((img, i) => (
+                                        <img 
+                                            key={i} 
+                                            src={img} 
+                                            className="h-full object-cover rounded-md" 
+                                        />
+                                        ))}
+                                    </div>
                                 </div>
                                 <h1 className="mt-3 font-medium">Quantity:{ele.quantity}</h1>
                                 <p className="text-gray-700">Price:{ele.price}</p>
@@ -73,6 +86,9 @@ const SearchPage = ()=>{
                         </div>
                     )
                 }
+                <div className="flex justify-center">
+                    <Paginator limit={LIMIT_PER_PAGE} page={page} total={total} handleClick={(e)=>{setPage(e)}} />
+                </div>
                 </div>
             </div>
         }
