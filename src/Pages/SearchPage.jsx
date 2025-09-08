@@ -3,6 +3,7 @@ import { Navbar } from "../Components/Navbar"
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { Paginator } from "../Components/Paginator";
+import { ToastContainer, toast } from 'react-toastify';
 
 const LIMIT_PER_PAGE =10
 
@@ -16,10 +17,11 @@ const SearchPage = ()=>{
     const[total,setTotal] = useState(0);
     const[page,setPage] = useState(1);
 
+
     const getData = async()=>{
         try{
             setLoading(true);
-            const response = await fetch(`http://localhost:3900/api/v1/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}`,{
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}`,{
                 method:"GET"
             })
             const result =  await response.json();
@@ -34,6 +36,10 @@ const SearchPage = ()=>{
             setLoading(false);
         }
     }
+    const handleClick = (e)=>{
+        setPage(e);
+        toast.success("Page Changed Successfully")
+    }
 
     useEffect(()=>{
         getData();
@@ -41,6 +47,7 @@ const SearchPage = ()=>{
 
     return(
         <>
+        <ToastContainer autoClose={2000}/>
         <Navbar/>
         {
             loading?
@@ -87,7 +94,7 @@ const SearchPage = ()=>{
                     )
                 }
                 <div className="flex justify-center">
-                    <Paginator limit={LIMIT_PER_PAGE} page={page} total={total} handleClick={(e)=>{setPage(e)}} />
+                    <Paginator limit={LIMIT_PER_PAGE} page={page} total={total} handleClick={handleClick} />
                 </div>
                 </div>
             </div>

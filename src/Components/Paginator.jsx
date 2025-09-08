@@ -3,6 +3,7 @@ const Paginator = ({total,limit,page,handleClick})=>{
 
     const dummyArray = new Array(toatlPages).fill("hi");
     console.log(dummyArray);
+    
 
     return(
         <>

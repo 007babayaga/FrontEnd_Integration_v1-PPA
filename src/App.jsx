@@ -4,7 +4,7 @@ import { SearchPage } from "./Pages/SearchPage";
 import { ViewPage } from "./Pages/ViewPage";
 import { NotFoundPage } from "./Pages/NotFoundPage";
 import { LoginPage } from "./Pages/LoginPage";
-import { UserAccount } from "./Pages/UserAccount";
+import { SignUpPage } from "./Pages/SignUpPage";
 
 const App = ()=>{
   return(
@@ -15,7 +15,7 @@ const App = ()=>{
       <Route path="/search" element={<SearchPage/>} />
       <Route path="/view/:productId" element={<ViewPage/>} />
       <Route path="/login" element={<LoginPage/>} />
-      <Route path="/userAccount" element={<UserAccount/>} />
+      <Route path="/signUp" element={<SignUpPage/>} />
       <Route path="*" element={<NotFoundPage/>} />
     </Routes>
     </BrowserRouter>,

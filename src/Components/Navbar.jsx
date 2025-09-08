@@ -6,7 +6,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 
-const Navbar = () => {
+const Navbar = ({searchBox=true}) => {
     const [query] = useSearchParams();
     const defaultSearchValue = query.get("text");
 
@@ -26,8 +26,8 @@ const Navbar = () => {
             <div className="text-3xl font-extrabold text-white tracking-wide">
             <Link to="/">TrueBuy</Link>
             </div>
-
-            <div className="hidden md:flex gap-2">
+            {
+                searchBox &&(<div className="hidden md:flex gap-2">
             <input
                 className="px-4 py-2 bg-white/90 rounded-md w-80 shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 type="text"
@@ -38,17 +38,18 @@ const Navbar = () => {
             <button onClick={handleSearchClick} className="px-5 py-2 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
                 Search
             </button>
-            </div>
-
+            </div>)
+            }
+            
             <div className="hidden md:flex gap-10 items-center text-sm font-medium text-white">
             <Link to="/login" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
                 <IoLogInOutline className="text-2xl mb-1" />
                 Login
             </Link>
 
-            <Link to="/userAccount" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
+            <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
                 <MdAccountCircle className="text-2xl mb-1" />
-                Account
+                SignUp
             </Link>
 
 
@@ -73,6 +74,9 @@ const Navbar = () => {
         {menuOpen && (
         <div className="md:hidden bg-white/90 backdrop-blur-md  px-6 py-4 space-y-5 text-gray-800   ">
           {/* Mobile Search */}
+
+            {
+            searchBox &&(<>
             <input
             className="px-4 py-2 bg-gray-100 rounded-md w-full shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
@@ -83,12 +87,15 @@ const Navbar = () => {
             <button onClick={handleSearchClick} className="w-full px-4 py-2 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 transition-all duration-300 cursor-pointer">
             Search
             </button>
+            </>)
+            }
+            
 
           {/* Mobile Links */}
             <div className="flex justify-around pt-3 text-sm font-medium">
-            <Link to="/userAccount" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
+            <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
                 <MdAccountCircle className="text-2xl mb-1" />
-                Account
+                SignUp
             </Link>
 
             <Link to="/login" className="flex flex-col items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
