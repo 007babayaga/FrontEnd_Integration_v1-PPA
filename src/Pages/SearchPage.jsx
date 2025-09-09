@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { Paginator } from "../Components/Paginator";
 import { ToastContainer, toast } from 'react-toastify';
+import { Footer } from "../Components/Footer";
 
 const LIMIT_PER_PAGE =10
 
@@ -99,6 +100,7 @@ const SearchPage = ()=>{
                 </div>
             </div>
         }
+        <Footer/>
         </>
     )
 }

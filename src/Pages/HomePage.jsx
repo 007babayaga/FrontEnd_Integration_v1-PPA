@@ -1,3 +1,4 @@
+import { Footer } from "../Components/Footer"
 import { Navbar } from "../Components/Navbar"
 
 const HomePage = ()=>{
@@ -5,6 +6,7 @@ const HomePage = ()=>{
         <>
         <Navbar/>
         <p>HomePage</p>
+        <Footer/>
         </>
     )
 }
