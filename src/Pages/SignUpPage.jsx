@@ -32,7 +32,8 @@ const SignUpPage = ()=>{
                 }
             })
             if(response.status==201){
-                successToast("SignUp Successful")
+                const result = await response.json();
+                successToast(result.message)
             }
             else{
                 const result = await response.json();
