@@ -9,6 +9,7 @@ import { Footer } from "../Components/Footer";
 const LIMIT_PER_PAGE =10
 
 const SearchPage = ()=>{
+    const[sortOrder,setsortOrder] = useState("");
 
     const [query] = useSearchParams();
     const searchText= query.get("text")
@@ -18,11 +19,10 @@ const SearchPage = ()=>{
     const[total,setTotal] = useState(0);
     const[page,setPage] = useState(1);
 
-
     const getData = async()=>{
         try{
             setLoading(true);
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}`,{
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}&sort=${sortOrder}`,{
                 method:"GET"
             })
             const result =  await response.json();
@@ -41,10 +41,14 @@ const SearchPage = ()=>{
         setPage(e);
         toast.success("Page Changed Successfully")
     }
+    const handleSortChange =(e)=>{
+        console.log(e.target.value);
+        setsortOrder(e.target.value);
+    }
 
     useEffect(()=>{
         getData();
-    },[searchText,page]);
+    },[searchText,page,sortOrder]);
 
     return(
         <>
@@ -59,7 +63,34 @@ const SearchPage = ()=>{
             <div className="flex min-h-screen">
 
                 <div className="w-50 bg-blue-200">
-                    <p>Filters</p>
+                    <div className="flex flex-col gap-3 p-5 items-center">
+                        <p className="font-bold text-center  py-2  rounded-md bg-white w-full  ">Filters</p>
+
+                        <div className="flex flex-col gap-2 w-full  p-4 bg-cyan-100 rounded-md cursor-pointer hover:shadow-xl hover:shadow-blue-500 transition-shadow duration-300 border-l-4 border-blue-500">   
+                        <h2 className="font-bold font-serif text-blue-900">Sort By price</h2>
+                        <label>
+                        <input
+                        type="radio"
+                        name="sortOrder"
+                        value="asc"
+                        onChange={handleSortChange}
+                        checked={sortOrder === "asc"}
+                        />
+                        Low ➡️ High
+                        </label>
+                        <label>
+                        <input
+                        type="radio"
+                        name="sortOrder"
+                        value="desc"
+                        onChange={handleSortChange}
+                        checked={sortOrder === "desc"}
+                        />
+                        High ➡️ Low
+                        </label>
+                        </div>
+
+                    </div>
                 </div>
 
                 <div className="flex flex-1 flex-col p-5 gap-6 bg-blue-100">

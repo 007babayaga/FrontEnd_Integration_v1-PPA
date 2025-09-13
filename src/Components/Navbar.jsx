@@ -7,6 +7,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 
 const Navbar = ({searchBox=true}) => {
+    
     const [query] = useSearchParams();
     const defaultSearchValue = query.get("text");
 
@@ -40,24 +41,23 @@ const Navbar = ({searchBox=true}) => {
             </button>
             </div>)
             }
-            
-            <div className="hidden md:flex gap-10 items-center text-sm font-medium text-white">
-            <Link to="/login" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
+                <div className="hidden md:flex gap-10 items-center text-sm font-medium text-white">
+
+                <Link to="/login" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
                 <IoLogInOutline className="text-2xl mb-1" />
                 Login
-            </Link>
+                </Link>
 
-            <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
+                <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
                 <MdAccountCircle className="text-2xl mb-1" />
                 SignUp
-            </Link>
-
-
-            <Link to="/cart"className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
+                </Link>
+                
+                <Link to="/cart"className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
                 <FiShoppingCart className="text-2xl mb-1" />
                 Cart
-            </Link>
-
+                </Link>
+                
             </div>
 
             {/* For Small screens */}

@@ -4,6 +4,7 @@ import { Navbar } from "../Components/Navbar"
 import { IoMdEye,IoMdEyeOff } from "react-icons/io";
 import { MoonLoader  } from "react-spinners";
 import { erorrToast, successToast } from "../../utils/toastHelper";
+import { Link, useNavigate } from "react-router";
 
 
 
@@ -11,9 +12,12 @@ const SignUpPage = ()=>{
     const[showPassword, setShowPassword] = useState(false);
     const[isOtpSent,setIsOtpSent] = useState(false);
     const[otpSending,setOtpSending] = useState(false);
+    const[signUpUser,setSignUpUser] = useState(false);
+    const navigate = useNavigate();
 
     const HandleSignUp = async(e)=>{
         try{
+            setSignUpUser(true);
             const name = e.target.name.value;
             const email = e.target.email.value;
             const password = e.target.password.value;
@@ -34,6 +38,12 @@ const SignUpPage = ()=>{
             if(response.status==201){
                 const result = await response.json();
                 successToast(result.message)
+                navigate("/login");
+            }
+            else if(response.status==409){
+                const result = await response.json();
+                erorrToast(result.message)
+                navigate("/login");
             }
             else{
                 const result = await response.json();
@@ -42,6 +52,9 @@ const SignUpPage = ()=>{
         }
         catch(err){
             erorrToast(`Unable To SignUp${err.message}`);
+        }
+        finally{
+            setSignUpUser(false);
         }
     }
     const handleSendOpt = async(e)=>{
@@ -88,7 +101,7 @@ const SignUpPage = ()=>{
         <>
         <Navbar searchBox={false}/>
         <div className="flex pt-3 justify-center  bg-gray-100 min-h-screen ">
-            <form className="flex flex-col items-center justify-center p-8 gap-4 bg-gray-50 rounded-md shadow-lg w-full max-w-md mx-4 mb-7" onSubmit={HandleSubmit}> 
+            <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}> 
                 <h2 className="text-2xl font-bold text-blue-800 mb-7">Sign Up</h2> 
                 <div className="flex flex-col p-3 gap-2 w-full">
                     <label className="text-blue-700 font-bold">
@@ -144,9 +157,9 @@ const SignUpPage = ()=>{
                     
                 )}
                 {
-                    otpSending ?
+                    otpSending || signUpUser?
                     <>
-                    <MoonLoader />
+                    <MoonLoader size={30} />
                     </>
                     :
                     <>
@@ -163,7 +176,10 @@ const SignUpPage = ()=>{
                     >
                     Send Otp
                     </button>
-                }
+                    }
+                    <div>
+                        <Link className="font-bold w-full  tracking-wider" to="/login">Already have an Account? <span className="text-blue-700 text-decoration: underline">Login Here</span></Link>
+                    </div>
                     </>
                 }
                 

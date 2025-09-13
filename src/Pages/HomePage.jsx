@@ -1,10 +1,10 @@
 import { Footer } from "../Components/Footer"
 import { Navbar } from "../Components/Navbar"
 
-const HomePage = ()=>{
+const HomePage = ({user})=>{
     return(
         <>
-        <Navbar/>
+        <Navbar user={user}/>
         <p>HomePage</p>
         <Footer/>
         </>
