@@ -23,7 +23,8 @@ const SearchPage = ()=>{
         try{
             setLoading(true);
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?q=${searchText}&limit=${LIMIT_PER_PAGE}&page=${page}&sort=${sortOrder}`,{
-                method:"GET"
+                method:"GET",
+                credentials:"include"
             })
             const result =  await response.json();
             console.log(result);
@@ -131,7 +132,7 @@ const SearchPage = ()=>{
                 </div>
             </div>
         }
-        <Footer/>
+        <Footer loading={loading}/>
         </>
     )
 }

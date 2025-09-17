@@ -5,13 +5,54 @@ import { ViewPage } from "./Pages/ViewPage";
 import { NotFoundPage } from "./Pages/NotFoundPage";
 import { LoginPage } from "./Pages/LoginPage";
 import { SignUpPage } from "./Pages/SignUpPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { erorrToast } from "../utils/toastHelper";
+import { FadeLoader  } from "react-spinners";
 
 const App = ()=>{
   const[user,setUser] = useState({isLoggedIn:false})
+  const[appLoading,setAppLoading] = useState(true);
+
+
+  const isUserLoggedIn = async()=>{
+    try{
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/me`,{
+        method:"GET",
+        credentials:"include"
+      })
+      const result = await response.json();
+      if(response.status==200){
+        setUser({
+          isLoggedIn:true,
+          ...result.data.user,
+        })
+      }
+      else{
+        erorrToast("Please Login First!!")
+      }
+    }
+    catch(err){
+      erorrToast(`Error in User Validation ${err.message}`)
+    }
+    finally{
+      setAppLoading(false)
+    }
+  }
+  useEffect(()=>{
+    isUserLoggedIn();
+  },[]);
 
   const{isLoggedIn} = user;
 
+  if(appLoading){
+    return(
+      <>
+      <div className="min-h-screen flex items-center justify-center">
+        <FadeLoader size={20}/>
+      </div>
+      </>
+    )
+  }
   if(!isLoggedIn){
     return(
     <BrowserRouter>

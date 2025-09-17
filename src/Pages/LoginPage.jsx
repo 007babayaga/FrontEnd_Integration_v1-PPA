@@ -35,8 +35,8 @@ const LoginPage = ({setUser})=>{
             if(response.status==200){
                 successToast(res.message)
                 setUser({
-                    // isLoggedIn:true,
-                    ...res.data
+                    isLoggedIn:true,
+                    // ...res.data
                 })
                 navigate("/")
             }
