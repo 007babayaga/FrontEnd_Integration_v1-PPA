@@ -5,75 +5,59 @@ import { ViewPage } from "./Pages/ViewPage";
 import { NotFoundPage } from "./Pages/NotFoundPage";
 import { LoginPage } from "./Pages/LoginPage";
 import { SignUpPage } from "./Pages/SignUpPage";
-import { useEffect, useState } from "react";
-import { erorrToast } from "../utils/toastHelper";
-import { FadeLoader  } from "react-spinners";
+import { Apploader } from "./Components/Apploader";
+import {  AppContextProvider, useAuthContext } from "./context/AppContext";
+import { ToastContainer } from "react-toastify";
+import { BasicLayout } from "./Pages/BasicLayout";
+import { CatergoryPage } from "./Pages/CatergoryPage";
 
 const App = ()=>{
-  const[user,setUser] = useState({isLoggedIn:false})
-  const[appLoading,setAppLoading] = useState(true);
 
-
-  const isUserLoggedIn = async()=>{
-    try{
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/me`,{
-        method:"GET",
-        credentials:"include"
-      })
-      const result = await response.json();
-      if(response.status==200){
-        setUser({
-          isLoggedIn:true,
-          ...result.data.user,
-        })
-      }
-      else{
-        erorrToast("Please Login First!!")
-      }
-    }
-    catch(err){
-      erorrToast(`Error in User Validation ${err.message}`)
-    }
-    finally{
-      setAppLoading(false)
-    }
-  }
-  useEffect(()=>{
-    isUserLoggedIn();
-  },[]);
-
-  const{isLoggedIn} = user;
+  const{appLoading,isLoggedIn} = useAuthContext();
 
   if(appLoading){
     return(
       <>
-      <div className="min-h-screen flex items-center justify-center">
-        <FadeLoader size={20}/>
-      </div>
+      <Apploader/>
       </>
     )
   }
   if(!isLoggedIn){
     return(
-    <BrowserRouter>
-    <Routes>
-      <Route path="/login" element={<LoginPage setUser={setUser}/>} />
-      <Route path="/signUp" element={<SignUpPage/>} />
-      <Route path="*" element={<NotFoundPage user={user}/>} />
-    </Routes>
-    </BrowserRouter>
+      <AppContextProvider>
+        <ToastContainer/>
+        <BrowserRouter>
+        <Routes>
+          <Route element={<BasicLayout/>}>
+          <Route path="/" element={<HomePage  />} />
+          <Route path="/login" element={<LoginPage  />} />
+          <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/search" element={<SearchPage  />} />
+          <Route path="/category/:slug" element={<CatergoryPage />} />
+          <Route path="/view/:productId" element={<ViewPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage  />} />
+        </Routes>
+        </BrowserRouter>
+        </AppContextProvider>
   )}
 
   return(
     <>
+    <AppContextProvider>
+    <ToastContainer/>
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<HomePage/>} />
-      <Route path="/search" element={<SearchPage/>} />
-      <Route path="/view/:productId" element={<ViewPage/>} />
-      <Route path="*" element={<NotFoundPage/>} />
+      <Route element={<BasicLayout/>}>
+        <Route path="/" element={<HomePage  />} />
+        <Route path="/search" element={<SearchPage  />} />
+        <Route path="/category/:slug" element={<CatergoryPage />} />
+        <Route path="/view/:productId" element={<ViewPage  />} />
+      </Route>
+        <Route path="*" element={<NotFoundPage  />} />
     </Routes>
-    </BrowserRouter>,
+    </BrowserRouter>
+    </AppContextProvider> 
     </>
   )
 }

@@ -7,7 +7,6 @@ import { erorrToast, successToast } from "../../utils/toastHelper";
 import { Link, useNavigate } from "react-router";
 
 
-
 const SignUpPage = ()=>{
     const[showPassword, setShowPassword] = useState(false);
     const[isOtpSent,setIsOtpSent] = useState(false);
@@ -97,9 +96,9 @@ const SignUpPage = ()=>{
         }
     }
 
+
     return(
         <>
-        <Navbar searchBox={false}/>
         <div className="flex pt-3 justify-center  bg-gray-100 min-h-screen ">
             <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}> 
                 <h2 className="text-2xl font-bold text-blue-800 mb-7">Sign Up</h2> 

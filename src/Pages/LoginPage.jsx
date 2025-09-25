@@ -1,18 +1,19 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { Footer } from "../Components/Footer";
 import { Navbar } from "../Components/Navbar"
 import { IoMdEye,IoMdEyeOff } from "react-icons/io";
 import { MoonLoader  } from "react-spinners";
 import { erorrToast, successToast } from "../../utils/toastHelper";
-import { Link, useNavigate } from "react-router";
+import { Link,  useNavigate, useSearchParams} from "react-router";
+import { useAuthContext } from "../context/AppContext";
 
-
-
-const LoginPage = ({setUser})=>{
+const LoginPage = ()=>{
+    const {handleSetUser,getCartItems} = useAuthContext();
     const[showPassword,setshowPassword] = useState(false);
     const[loading,setLoading] = useState(false);
-
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const redirectUrl = searchParams.get("redirect") || "/";
 
     const HandleSubmit = async(e)=>{
         e.preventDefault();
@@ -32,13 +33,13 @@ const LoginPage = ({setUser})=>{
                 credentials:"include"
             })
             const res = await response.json();
-            if(response.status==200){
-                successToast(res.message)
-                setUser({
-                    isLoggedIn:true,
-                    // ...res.data
-                })
-                navigate("/")
+            if(response.status === 200){
+                successToast("Login Success")
+                handleSetUser({
+                isLoggedIn: true,
+            });
+            getCartItems();
+            navigate(redirectUrl, { replace: true });
             }
             else{
                 erorrToast(res.message);
@@ -54,8 +55,7 @@ const LoginPage = ({setUser})=>{
     }
 
     return(
-        <>
-        <Navbar searchBox={false}/>
+        <> 
         <div className="flex pt-3 justify-center  bg-gray-100 min-h-screen ">
             <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}> 
                 <h2 className="text-2xl font-bold text-blue-800 mb-7">Login</h2> 

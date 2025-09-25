@@ -1,19 +1,29 @@
 
 import { MdAccountCircle } from "react-icons/md";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams,useLocation } from "react-router";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiMenu, FiX } from "react-icons/fi";
-import { useState } from "react";
+import {  useState } from "react";
+import {  useAuthContext } from "../context/AppContext";
 
-const Navbar = ({searchBox=true}) => {
-    
+
+
+const Navbar = () => {
+    const location = useLocation();
+    const hideNavItems = ["/login", "/signUp"].includes(location.pathname);
+
+
     const [query] = useSearchParams();
     const defaultSearchValue = query.get("text");
-
     const[searchText,setSearchtext] = useState(defaultSearchValue || " ");
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate= useNavigate();
+
+    const {isLoggedIn,HandleLogout,cart} = useAuthContext()
+    
+
+    const totalItems = cart.length;
 
     const handleSearchClick = ()=>{
         navigate(`/search?text=${searchText}`)
@@ -28,7 +38,7 @@ const Navbar = ({searchBox=true}) => {
             <Link to="/">TrueBuy</Link>
             </div>
             {
-                searchBox &&(<div className="hidden md:flex gap-2">
+                !hideNavItems &&(<div className="hidden md:flex gap-2">
             <input
                 className="px-4 py-2 bg-white/90 rounded-md w-80 shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 type="text"
@@ -42,22 +52,34 @@ const Navbar = ({searchBox=true}) => {
             </div>)
             }
                 <div className="hidden md:flex gap-10 items-center text-sm font-medium text-white">
-
-                <Link to="/login" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
-                <IoLogInOutline className="text-2xl mb-1" />
-                Login
-                </Link>
-
-                <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
-                <MdAccountCircle className="text-2xl mb-1" />
-                SignUp
-                </Link>
-                
-                <Link to="/cart"className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
-                <FiShoppingCart className="text-2xl mb-1" />
-                Cart
-                </Link>
-                
+                    {
+                        isLoggedIn ?
+                        <>
+                        <button 
+                        onClick={HandleLogout}
+                        className="px-5 py-2.5 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                        LogOut
+                        </button>
+                        <div className="flex gap-2 ">
+                        <Link to="/cart"className=" hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
+                        Cart
+                        <FiShoppingCart className="text-2xl mb-1" />
+                        </Link>
+                        <p className="rounded-2xl bg-red-400 h-6 px-2">{totalItems}</p>
+                        </div>
+                        </>
+                        :
+                        <>
+                        <Link to="/login" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
+                        <IoLogInOutline className="text-2xl mb-1" />
+                        Login
+                        </Link>
+                        <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
+                        <MdAccountCircle className="text-2xl mb-1" />
+                        SignUp
+                        </Link>
+                        </>
+                    }
             </div>
 
             {/* For Small screens */}
@@ -76,7 +98,7 @@ const Navbar = ({searchBox=true}) => {
           {/* Mobile Search */}
 
             {
-            searchBox &&(<>
+            !hideNavItems &&(<>
             <input
             className="px-4 py-2 bg-gray-100 rounded-md w-full shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
@@ -92,23 +114,37 @@ const Navbar = ({searchBox=true}) => {
             
 
           {/* Mobile Links */}
-            <div className="flex justify-around pt-3 text-sm font-medium">
-            <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
+            {
+                isLoggedIn?
+                <>
+                <button 
+                onClick={HandleLogout}
+                className="w-full px-4 py-2 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 transition-all duration-300 cursor-pointer">
+                LogOut
+                </button>
+                <Link to="/cart" className="flex flex-col  font-bold items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
+                Cart
+                <div className="flex gap-2">
+                <FiShoppingCart className="text-2xl mb-1" />
+                <p className="rounded-2xl bg-red-400 h-6 px-2 text-white">{totalItems}</p>
+                </div>
+                </Link>
+                </>
+                :
+                <>
+                <div className="flex justify-around pt-3 text-sm font-medium">
+                <Link to="/signUp" className="flex flex-col items-center hover:text-blue-600  transition-all duration-300 hover:scale-105">
                 <MdAccountCircle className="text-2xl mb-1" />
                 SignUp
-            </Link>
+                </Link>
 
-            <Link to="/login" className="flex flex-col items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
+                <Link to="/login" className="flex flex-col items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
                 <IoLogInOutline className="text-2xl mb-1" />
                 Login
-            </Link>
-
-            <Link to="/cart" className="flex flex-col items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
-                <FiShoppingCart className="text-2xl mb-1" />
-                Cart
-            </Link>
-
+                </Link>
             </div>
+                </>
+            }
         </div>
         )}
     </nav>

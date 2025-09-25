@@ -1,4 +1,4 @@
-import { Bounce, Flip, Slide, toast, Zoom } from "react-toastify";
+import { Slide, toast } from "react-toastify";
 
 const erorrToast = (txt) => {
     toast.error(txt, {

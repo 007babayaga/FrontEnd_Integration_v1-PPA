@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router"
+import { useNavigate,useSearchParams } from "react-router"
 import { Navbar } from "../Components/Navbar"
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
@@ -9,7 +9,9 @@ import { Footer } from "../Components/Footer";
 const LIMIT_PER_PAGE =10
 
 const SearchPage = ()=>{
+    
     const[sortOrder,setsortOrder] = useState("");
+    const navigate = useNavigate();
 
     const [query] = useSearchParams();
     const searchText= query.get("text")
@@ -27,7 +29,6 @@ const SearchPage = ()=>{
                 credentials:"include"
             })
             const result =  await response.json();
-            console.log(result);
             setTotal(result.data.total);
             setProducts(result.data.products);
         }
@@ -46,6 +47,9 @@ const SearchPage = ()=>{
         console.log(e.target.value);
         setsortOrder(e.target.value);
     }
+    const HandleViewProduct = (id)=>{
+        navigate(`/view/${id}`)
+    }
 
     useEffect(()=>{
         getData();
@@ -54,7 +58,6 @@ const SearchPage = ()=>{
     return(
         <>
         <ToastContainer autoClose={2000}/>
-        <Navbar/>
         {
             loading?
             <div className="fixed top-1/2 left-1/2 -translate-1/2">
@@ -98,7 +101,7 @@ const SearchPage = ()=>{
                 {
                     products.map((ele,idx)=>{
                         return(
-                            <div className="shadow-lg rounded-2xl p-4 m-4 bg-white hover:shadow-2xl cursor-pointer transition-shadow duration-300" key={idx}>
+                            <div onClick={()=>{HandleViewProduct(ele._id)}} className="shadow-lg rounded-2xl p-4 m-4 bg-white hover:shadow-2xl cursor-pointer transition-shadow duration-300" key={idx}>
                                 <h1 className="text-lg font-semibold mb-2">Item Name:{ele.title}</h1>
                                 <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded-md overflow-hidden">
                                     <div className="flex gap-2 overflow-x-auto h-full w-full">
