@@ -11,6 +11,9 @@ import { ToastContainer } from "react-toastify";
 import { BasicLayout } from "./Pages/BasicLayout";
 import { CatergoryPage } from "./Pages/CatergoryPage";
 
+
+
+
 const App = ()=>{
 
   const{appLoading,isLoggedIn} = useAuthContext();
@@ -53,6 +56,8 @@ const App = ()=>{
         <Route path="/search" element={<SearchPage  />} />
         <Route path="/category/:slug" element={<CatergoryPage />} />
         <Route path="/view/:productId" element={<ViewPage  />} />
+
+
       </Route>
         <Route path="*" element={<NotFoundPage  />} />
     </Routes>

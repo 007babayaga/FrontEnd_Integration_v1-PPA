@@ -17,7 +17,7 @@ const ViewPage = () => {
     const navigate = useNavigate();
 
 
-    const { isLoggedIn, AddToCart, RemoveFromCart,cart,addingProductToCart } = useAuthContext();
+    const { isLoggedIn, AddToCart, RemoveFromCart,cart,updatingCartState } = useAuthContext();
 
     const getProduct = async () => {
         try {
@@ -47,11 +47,11 @@ const ViewPage = () => {
             navigate(`/login?redirect=/view/${productId}`);
         }
     }
-    const HandleRemoveFromCart = () => {
+    const HandleRemoveFromCart = async() => {
         if (isLoggedIn) {
             // Remove From Cart
-            successToast("product Removed")
-            RemoveFromCart(product)
+            await RemoveFromCart(productId)
+            successToast("Product Removed form Cart!")
         }
     }
     
@@ -59,7 +59,7 @@ const ViewPage = () => {
     
     useEffect(() => {
         getProduct();
-    }, [])
+    }, [productId])
 
     return (
         <>
@@ -116,7 +116,7 @@ const ViewPage = () => {
                                     </div>
                                 </div>
                                 {
-                                    addingProductToCart ? 
+                                    updatingCartState ? 
                                     <>
                                     <div className="flex justify-center">
                                     <ClipLoader/>
@@ -128,23 +128,27 @@ const ViewPage = () => {
                                     {
                                         currentItem ?
                                         <>
-                                            <div className="bg-blue-500 p-3 flex gap-9 items-center rounded-md text-white w-fit font-bold">
-                                                <button 
+                                            <div className=" p-3 flex gap-9 items-center rounded-md  bg-gray-100 w-fit font-bold">
+                                                <Button
+                                                disabled={updatingCartState}
+                                                variant="outline-primary"
                                                 onClick={HandleRemoveFromCart}
                                                 className="text-2xl cursor-pointer ">
                                                 -
-                                                </button>
+                                                </Button>
                                                 <p className="font-bold text-2xl">{currentItem.cartQuantity}</p>
-                                                <button
+                                                <Button
+                                                disabled={updatingCartState}
+                                                variant="outline-primary"
                                                 onClick={HanldeAddToCart}
                                                 className="text-2xl cursor-pointer">
                                                 +
-                                                </button>
+                                                </Button>
                                             </div>
                                             </>
                                             :
                                             <>
-                                            <Button onClick={HanldeAddToCart}>Add to Cart</Button>
+                                            <Button className="w-full py-4" onClick={HanldeAddToCart}>Add to Cart</Button>
                                             </>
                                     }
                                     </div>
@@ -154,7 +158,7 @@ const ViewPage = () => {
                         </div>
                     </div>
             }
-            <Footer loading={loading} />
+            <Footer />
         </>
     )
 }

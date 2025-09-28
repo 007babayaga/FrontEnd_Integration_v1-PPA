@@ -4,6 +4,7 @@ import './index.css'
 import {App} from './App.jsx'
 import { ToastContainer } from 'react-toastify'
 import { AppContextProvider } from './context/AppContext.jsx'
+import { BrowserRouter } from 'react-router'
 
 
 

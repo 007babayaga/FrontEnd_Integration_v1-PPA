@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { erorrToast, successToast } from "../../utils/toastHelper";
 
 
-
 const AuthContext = createContext();
 
 const AppContextProvider = ({ children }) => {
+    
     const [user, setUser] = useState({ isLoggedIn: false })
     const [appLoading, setAppLoading] = useState(true);
-    const[addingProductToCart,setAddingProductToCart] = useState(false);
+    const [updatingCartState,setUpdatingCartState] = useState(false);
     const [cart, setCart] = useState([]);
+    const [placingOrder,setPlacingOrder] = useState(false);
     const { isLoggedIn } = user;
 
     const isUserLoggedIn = async () => {
@@ -40,9 +41,16 @@ const AppContextProvider = ({ children }) => {
 
     useEffect(() => {
         isUserLoggedIn();
-        getCartItems();
-    }, []);
-    
+    }, []); 
+
+    useEffect(() => {
+        if(isLoggedIn){
+            getCartItems();
+        }
+        else{
+            setCart([])
+        }
+    }, [isLoggedIn]); 
 
     const HandleLogout = async () => {
         try {
@@ -78,7 +86,9 @@ const AppContextProvider = ({ children }) => {
                 credentials:"include"
             })
             const res = await response.json()
-            setCart(res.items.data);
+            if(response.status===200){
+                setCart(res.items.data);
+            }
         }
         catch(err){
             console.log("Error in Getting carts items",err.message);
@@ -90,34 +100,67 @@ const AppContextProvider = ({ children }) => {
 
     const AddToCart = async(productId) => { 
         try{
-            setAddingProductToCart(true)
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`,{
+            setUpdatingCartState(true)
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/add/${productId}`,{
                 method:"POST",
                 credentials:"include"
             })
-            getCartItems();
+            const res = await response.json();
+            setCart(res.items.data)
         }
         catch(err){
             console.log("Error in Add Product Api",err.message);
         }
         finally{
-            setAddingProductToCart(false);
+            setUpdatingCartState(false);
         }
     }
 
-    const RemoveFromCart = (product) => {
-        setCart((prev) => {
-            const temp = { ...prev };
-            if (temp[product._id]) {
-                if (temp[product._id].cartQuantity > 1) {
-                    temp[product._id] = {...temp[product._id],cartQuantity: temp[product._id].cartQuantity - 1};
-                } else {
-                    delete temp[product._id];
-                }
-            }
-            return temp; 
-        });
+    const RemoveFromCart = async(productId) => {
+        try{
+            setUpdatingCartState(true)
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/remove/${productId}`,{
+                method:"POST",
+                credentials:"include"
+            })
+            const res = await response.json();
+            setCart(res.items.data)
+            
+        }
+        catch(err){
+            console.log("Error in Remove Product Api",err.message);
+        }
+        finally{
+            setUpdatingCartState(false);
+        }
     };
+
+    const handleCheckout =async(address)=>{
+        try{
+            setPlacingOrder(true)
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/orders`,{
+                method:"POST",
+                credentials:"include",
+                body:JSON.stringify({address}),
+                headers:{
+                    "Content-Type": "application/json"
+                }
+            })
+            const res = await response.json();
+            if(res.status===201){
+                successToast(res.message)
+            }
+            else{
+                erorrToast(res.message);
+            }
+        }
+        catch(err){
+            console.log("Error in Placing Order Api",err.message);
+        }
+        finally{
+            setPlacingOrder(false);
+        }
+    }
 
     const sharedValues = {
         appLoading,
@@ -128,8 +171,10 @@ const AppContextProvider = ({ children }) => {
         cart,
         AddToCart,
         RemoveFromCart,
-        addingProductToCart,
-        getCartItems
+        updatingCartState,
+        getCartItems,
+        handleCheckout,
+        placingOrder
     }
 
     return (

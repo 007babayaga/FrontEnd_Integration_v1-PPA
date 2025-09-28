@@ -7,8 +7,9 @@ import { erorrToast, successToast } from "../../utils/toastHelper";
 import { Link,  useNavigate, useSearchParams} from "react-router";
 import { useAuthContext } from "../context/AppContext";
 
+
 const LoginPage = ()=>{
-    const {handleSetUser,getCartItems} = useAuthContext();
+    const {handleSetUser} = useAuthContext();
     const[showPassword,setshowPassword] = useState(false);
     const[loading,setLoading] = useState(false);
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ const LoginPage = ()=>{
                 handleSetUser({
                 isLoggedIn: true,
             });
-            getCartItems();
+            
             navigate(redirectUrl, { replace: true });
             }
             else{

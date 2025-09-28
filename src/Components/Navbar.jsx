@@ -4,8 +4,10 @@ import { Link, useNavigate, useSearchParams,useLocation } from "react-router";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiMenu, FiX } from "react-icons/fi";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import {  useAuthContext } from "../context/AppContext";
+import { UserIcon } from "lucide-react";
+import { UserInfo } from "./UserInfo";
 
 
 
@@ -18,12 +20,12 @@ const Navbar = () => {
     const defaultSearchValue = query.get("text");
     const[searchText,setSearchtext] = useState(defaultSearchValue || " ");
     const [menuOpen, setMenuOpen] = useState(false);
+
     const navigate= useNavigate();
 
     const {isLoggedIn,HandleLogout,cart} = useAuthContext()
     
-
-    const totalItems = cart.length;
+    const totalCartItems = cart.length;
 
     const handleSearchClick = ()=>{
         navigate(`/search?text=${searchText}`)
@@ -55,17 +57,15 @@ const Navbar = () => {
                     {
                         isLoggedIn ?
                         <>
-                        <button 
-                        onClick={HandleLogout}
-                        className="px-5 py-2.5 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
-                        LogOut
-                        </button>
+                        <div>
+                        <UserInfo/>
+                        </div>
                         <div className="flex gap-2 ">
                         <Link to="/cart"className=" hover:text-blue-600  transition-all duration-300 hover:scale-105 ">
                         Cart
                         <FiShoppingCart className="text-2xl mb-1" />
                         </Link>
-                        <p className="rounded-2xl bg-red-400 h-6 px-2">{totalItems}</p>
+                        <p className="rounded-2xl bg-red-400 h-6 px-2">{totalCartItems}</p>
                         </div>
                         </>
                         :
@@ -117,16 +117,14 @@ const Navbar = () => {
             {
                 isLoggedIn?
                 <>
-                <button 
-                onClick={HandleLogout}
-                className="w-full px-4 py-2 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 transition-all duration-300 cursor-pointer">
-                LogOut
-                </button>
+                <div className="w-full flex justify-center">
+                <UserInfo />
+                </div>
                 <Link to="/cart" className="flex flex-col  font-bold items-center hover:text-blue-600 transition-all duration-300 hover:scale-105">
                 Cart
                 <div className="flex gap-2">
                 <FiShoppingCart className="text-2xl mb-1" />
-                <p className="rounded-2xl bg-red-400 h-6 px-2 text-white">{totalItems}</p>
+                <p className="rounded-2xl bg-red-400 h-6 px-2 text-white">{totalCartItems}</p>
                 </div>
                 </Link>
                 </>

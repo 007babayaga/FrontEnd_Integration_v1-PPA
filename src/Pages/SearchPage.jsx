@@ -56,15 +56,16 @@ const SearchPage = ()=>{
     },[searchText,page,sortOrder]);
 
     return(
-        <>
+        <div className="flex flex-col min-h-screen">
         <ToastContainer autoClose={2000}/>
+        <div className="flex-1 flex">
         {
             loading?
-            <div className="fixed top-1/2 left-1/2 -translate-1/2">
+            <div className="flex items-center justify-center w-full">
                 <SyncLoader size={20} />
             </div>
             :
-            <div className="flex min-h-screen">
+            <div className="flex w-full">
 
                 <div className="w-50 bg-blue-200">
                     <div className="flex flex-col gap-3 p-5 items-center">
@@ -135,8 +136,9 @@ const SearchPage = ()=>{
                 </div>
             </div>
         }
-        <Footer loading={loading}/>
-        </>
+        </div>
+        <Footer/>
+        </div>
     )
 }
 export{SearchPage}

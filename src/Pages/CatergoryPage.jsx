@@ -33,7 +33,7 @@ const CatergoryPage = () => {
     useEffect(() => {
         getPdtByCategory();
     }, [])
-    console.log(products)
+    
 
     return (
         <div>
@@ -67,7 +67,7 @@ const CatergoryPage = () => {
                                         onClick={()=>{HandleClickFromCategory(ele._id)}}
                                         className="mt-4 w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 transition duration-300 cursor-pointer"
                                         >
-                                        BuyNow
+                                        View Product
                                         </button>
                                     </div>
                                 ))
