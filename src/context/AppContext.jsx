@@ -147,8 +147,9 @@ const AppContextProvider = ({ children }) => {
                 }
             })
             const res = await response.json();
-            if(res.status===201){
-                successToast(res.message)
+            if(response.status===201){
+                successToast("Order placed SuccessFullly")
+                setCart([]);
             }
             else{
                 erorrToast(res.message);
@@ -179,9 +180,9 @@ const AppContextProvider = ({ children }) => {
 
     return (
         <>
-        <AuthContext value={sharedValues}>
+        <AuthContext.Provider value={sharedValues}>
             {children}
-        </AuthContext>
+        </AuthContext.Provider>
         </>
     )
 }

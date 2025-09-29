@@ -12,7 +12,7 @@ const UserInfo = () => {
     const userData = async () => {
         try {
             const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_URL}/users/details`,
+                `${import.meta.env.VITE_BACKEND_URL}/users/minDetails`,
                 {
                     method: "GET",
                     credentials: "include",

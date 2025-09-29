@@ -31,7 +31,6 @@ const HomePage = () => {
                 credentials: "include",
             })
             const res = await response.json();
-            console.log(res);
             setItems(res.data.products);
         } catch (err) {
             console.log("Error in getting items", err.message)
@@ -41,7 +40,7 @@ const HomePage = () => {
     const HandleCategoryClick = (slug) => {
         navigate(`/category/${slug}`)
     }
-     const HandleClickHome = (productId) => {
+    const HandleClickHome = (productId) => {
         navigate(`/view/${productId}`)
     }
 
@@ -87,13 +86,13 @@ const HomePage = () => {
                 </div>
                 {/* Right wala I will make it soon */}
                 <div className="flex flex-col gap-4 items-center ml-2">
-                    {/* Pehele wala */}
-                    <div className="  w-full p-2 bg-cyan-100 rounded-2xl shadow-md  text-center">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center justify-center gap-3">
-                            Welcome to  TrueBuy!
+                    {/* First Part */}
+                    <div className="  w-full p-1 bg-blue-200 rounded-2xl shadow-md  text-center">
+                        <h2 className="text-3xl font-bold text-gray-800 p-3.5 flex items-center justify-center gap-3">
+                            Welcome to  TrueBuy
                         </h2>
                     </div>
-                    {/* Duesre wala */}
+                    {/*Second Part */}
                     <div className="w-full relative overflow-hidden rounded-2xl ">
                         <div className="relative h-64 md:h-80 w-full">
                             <img
@@ -102,23 +101,21 @@ const HomePage = () => {
                                 className="w-full h-80 transition-all duration-700"
                             />
                             <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                                <h2 className="text-white text-3xl md:text-4xl font-bold">
-                                    Discover Amazing Deals!
-                                </h2>
+                                
                             </div>
                         </div>
                     </div>
-                    {/* tesra wala */}
-                    <div className="  w-full p-2 bg-cyan-100 rounded-2xl shadow-md border border-purple-100 text-center">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center justify-center gap-3">
+                    {/* Third part*/}
+                    <div className="  w-full p-1 bg-blue-200 rounded-2xl shadow-md border border-purple-100 text-center">
+                        <h2 className="text-3xl font-bold text-gray-800 p-3.5  flex items-center justify-center gap-3">
                             Explore Here!!
                         </h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-17 p-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-2.5">
                             {
                                 items.map((ele, idx) => (
                                     <div
-                                        className="p-4 bg-gray-100  rounded-md cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col items-center"
+                                        className="p-4 bg-gray-200  rounded-md cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col items-center"
                                         key={idx}
                                     >
                                         <img

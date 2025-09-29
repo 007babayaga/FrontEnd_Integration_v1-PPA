@@ -115,7 +115,7 @@ const SearchPage = ()=>{
                                         ))}
                                     </div>
                                 </div>
-                                <h1 className="mt-3 font-medium">Quantity:{ele.quantity}</h1>
+                                <h1 className="mt-3 font-medium">Stock:{ele.quantity}</h1>
                                 <p className="text-gray-700">Price:{ele.price}</p>
                             </div>
                         )

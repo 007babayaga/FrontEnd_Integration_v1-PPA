@@ -6,6 +6,7 @@ import { MoonLoader  } from "react-spinners";
 import { erorrToast, successToast } from "../../utils/toastHelper";
 import { Link,  useNavigate, useSearchParams} from "react-router";
 import { useAuthContext } from "../context/AppContext";
+import { ToastContainer } from "react-toastify";
 
 
 const LoginPage = ()=>{
@@ -43,7 +44,7 @@ const LoginPage = ()=>{
             navigate(redirectUrl, { replace: true });
             }
             else{
-                erorrToast(res.message);
+                erorrToast(res.message)
             }
         }
         catch(err){
@@ -58,6 +59,7 @@ const LoginPage = ()=>{
     return(
         <> 
         <div className="flex pt-3 justify-center  bg-gray-100 min-h-screen ">
+            <ToastContainer/>
             <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}> 
                 <h2 className="text-2xl font-bold text-blue-800 mb-7">Login</h2> 
                 <div className="flex flex-col p-3 gap-2 w-full">

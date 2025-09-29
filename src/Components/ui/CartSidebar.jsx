@@ -4,11 +4,14 @@ import { Button } from "./Button";
 import { useNavigate } from "react-router";
 
 const CartSidebar = ()=>{
-    const { cart, AddToCart, RemoveFromCart,updatingCartState,handleCheckout } = useAuthContext();
+    const { cart, AddToCart, RemoveFromCart,updatingCartState } = useAuthContext();
     const navigate = useNavigate();
 
     const HandleViewProduct = (productId)=>{
         navigate(`/view/${productId}`);
+    }
+    const handleCartView = ()=>{
+        navigate("/cart")
     }
 
     return(
@@ -30,7 +33,7 @@ const CartSidebar = ()=>{
                                         src={ele.product.images?.[0]}
                                         alt={ele.title}
                                     />
-
+                                    {ele.product.quantity<ele.cartQuantity&&<p className=" text-red-500">Out of Stock!</p>}
                                     <div className="flex gap-1">
                                         <h1 className="font-bold text-gray-900 overflow-x-hidden">
                                             {ele.product.title}
@@ -70,7 +73,7 @@ const CartSidebar = ()=>{
                             ))}
                             <div className="flex justify-center m-6">
                                 <Button 
-                                onClick={handleCheckout}
+                                onClick={handleCartView}
                                 className="px-3 py-2 bg-red-500 hover:bg-red-600">
                                 CheckOut
                                 </Button>
