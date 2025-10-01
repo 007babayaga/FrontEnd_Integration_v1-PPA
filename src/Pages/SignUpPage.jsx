@@ -349,25 +349,27 @@ const SignUpPage = () => {
                                         placeholder="Enter Otp"
                                         name="otp" />
                                 </div>
-                                <div className="flex flex-col p-3 gap-2 w-full relative">
+                                <div className="relative flex flex-col p-3 gap-2 w-full">
                                     <label className="text-blue-700 font-bold">
                                         Enter Your Password
                                     </label>
-                                    <input
-                                        className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 transition w-full "
-                                        onChange={(e) => { HandlePasswordChange(e.target.value) }}
-                                        value={password}
-                                        type={showPassword ? "text" : "password"}
-                                        required
-                                        placeholder="Enter Your Password"
-                                        name="password"
-                                    />
-                                    <span
-                                        className="absolute right-6 top-4/6 transform -translate-y-1/2 cursor-pointer text-black"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? <IoMdEye size={20} /> : <IoMdEyeOff size={20} />}
-                                    </span>
+                                    <div className="relative">
+                                        <input
+                                            className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 transition w-full pr-10"
+                                            onChange={(e) => { HandlePasswordChange(e.target.value) }}
+                                            value={password}
+                                            type={showPassword ? "text" : "password"}
+                                            required
+                                            placeholder="Enter Your Password"
+                                            name="password"
+                                        />
+                                        <span
+                                            className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-700"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <IoMdEye size={20} /> : <IoMdEyeOff size={20} />}
+                                        </span>
+                                    </div>
 
                                     {/* Password Requirements */}
                                     {password && (
@@ -409,7 +411,7 @@ const SignUpPage = () => {
                                             type="submit"
                                             className="px-3 w-90 py-2  tracking-wider mt-6 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer "
                                         >
-                                        SignUp
+                                            SignUp
                                         </button>
                                         :
                                         <button

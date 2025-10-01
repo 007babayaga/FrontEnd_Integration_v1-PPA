@@ -50,7 +50,7 @@ const CartSidebar = ()=>{
                                         </p>
                                         <div
                                             onClick={()=>{HandleDeleteFromCartSideBar(ele._id)}}
-                                            className=" p-1.5 bg-red-400 rounded-4xl text-gray-100">
+                                            className=" p-1 bg-red-400 rounded-md text-gray-100">
                                             <MdDeleteForever size={20}/>
                                         </div>
                                         </div>
