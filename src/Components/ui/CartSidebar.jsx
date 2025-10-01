@@ -2,16 +2,22 @@ import { useAuthContext } from "../../context/AppContext";
 import { ClipLoader } from "react-spinners";
 import { Button } from "./Button";
 import { useNavigate } from "react-router";
+import { MdDeleteForever } from "react-icons/md";
+import { successToast } from "../../../utils/toastHelper";
 
 const CartSidebar = ()=>{
-    const { cart, AddToCart, RemoveFromCart,updatingCartState } = useAuthContext();
+    const { cart, AddToCart, RemoveFromCart,updatingCartState,DeleteItemFromCart } = useAuthContext();
     const navigate = useNavigate();
 
-    const HandleViewProduct = (productId)=>{
-        navigate(`/view/${productId}`);
-    }
+    // const HandleViewProduct = (productId)=>{
+    //     navigate(`/view/${productId}`);
+    // }
     const handleCartView = ()=>{
         navigate("/cart")
+    }
+    const HandleDeleteFromCartSideBar = async(cartItemId)=>{
+        await DeleteItemFromCart(cartItemId);
+        successToast("Product Deleted!")
     }
 
     return(
@@ -21,7 +27,7 @@ const CartSidebar = ()=>{
                             {
                             cart.map((ele, idx) => (
                                 <div
-                                    onClick={()=>{HandleViewProduct(ele.product._id)}}
+                                    // onClick={()=>{HandleViewProduct(ele.product._id)}}
                                     key={idx}
                                     className=" p-3 flex flex-col items-center justify-center 
                                     border border-gray-200 rounded-xl shadow-sm 
@@ -38,9 +44,16 @@ const CartSidebar = ()=>{
                                         <h1 className="font-bold text-gray-900 overflow-x-hidden">
                                             {ele.product.title}
                                         </h1>
+                                        <div className="flex flex-col justify-between items-center">
                                         <p className="font-semibold text-green-600 ">
                                             ₹{ele.product.price?.toLocaleString()}
                                         </p>
+                                        <div
+                                            onClick={()=>{HandleDeleteFromCartSideBar(ele._id)}}
+                                            className=" p-1.5 bg-red-400 rounded-4xl text-gray-100">
+                                            <MdDeleteForever size={20}/>
+                                        </div>
+                                        </div>
                                     </div>
 
                                     <div className="flex gap-6 px-1 py-1 rounded-md mt-2 items-center bg-gray-200">

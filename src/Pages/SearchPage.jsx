@@ -5,6 +5,7 @@ import { SyncLoader } from "react-spinners";
 import { Paginator } from "../Components/Paginator";
 import { ToastContainer, toast } from 'react-toastify';
 import { Footer } from "../Components/Footer";
+import { successToast } from "../../utils/toastHelper";
 
 const LIMIT_PER_PAGE =10
 
@@ -41,7 +42,7 @@ const SearchPage = ()=>{
     }
     const handleClick = (e)=>{
         setPage(e);
-        toast.success("Page Changed Successfully")
+        successToast("Page Changed Successfully")
     }
     const handleSortChange =(e)=>{
         console.log(e.target.value);
@@ -57,7 +58,7 @@ const SearchPage = ()=>{
 
     return(
         <div className="flex flex-col min-h-screen">
-        <ToastContainer autoClose={2000}/>
+            <ToastContainer/>
         <div className="flex-1 flex">
         {
             loading?

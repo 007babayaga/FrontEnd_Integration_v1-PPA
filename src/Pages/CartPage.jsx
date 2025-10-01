@@ -5,9 +5,10 @@ import { useNavigate } from "react-router";
 import { MdDeleteForever } from "react-icons/md";
 import { successToast } from "../../utils/toastHelper";
 import { ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const CartPage = () => {
-    const { cart, handleCheckout,RemoveFromCart } = useAuthContext();
+    const { cart, handleCheckout,DeleteItemFromCart,updatingCartState } = useAuthContext();
     const [address, setAddress] = useState("");
     const navigate = useNavigate();
 
@@ -18,9 +19,9 @@ const CartPage = () => {
     const HanldeViewProduct = (productId)=>{
         navigate(`/view/${productId}`)
     }
-    const HandleDeleteFromCart = async(productId)=>{
-        await RemoveFromCart(productId)
-        successToast("Product Removed From Cart")
+    const HandleDeleteFromCart = async(cartItemId)=>{
+        await DeleteItemFromCart(cartItemId)
+        successToast("Item Deleted!")
     }
 
     // Calculate total
@@ -73,12 +74,19 @@ const CartPage = () => {
                                             <h1 className="font-bold text-gray-800 text-xl mb-3 line-clamp-2">
                                                 {ele.product.quantity<ele.cartQuantity&&<h1 className="text-red-500">Out Of Stock!</h1>}
                                                 {ele.product.title}
-                                            </h1>
+                                            </h1> 
+                                            {
+                                                updatingCartState ?
+                                                <div>
+                                                    <ClipLoader/>
+                                                </div>
+                                                :
                                             <div
-                                            onClick={()=>{HandleDeleteFromCart(ele.product._id)}}
-                                            className="px-2 py-1 bg-red-400 rounded-2xl">
+                                            onClick={()=>{HandleDeleteFromCart(ele._id)}}
+                                            className=" p-1.5 bg-red-400 rounded-2xl text-gray-100">
                                                 <MdDeleteForever size={20}/>
                                             </div>
+                                            }
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <p className="font-bold text-green-600 text-2xl">

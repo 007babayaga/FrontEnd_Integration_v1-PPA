@@ -162,6 +162,23 @@ const AppContextProvider = ({ children }) => {
             setPlacingOrder(false);
         }
     }
+    const DeleteItemFromCart = async(cartItemId)=>{
+        try{
+            setUpdatingCartState(true);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/delete/${cartItemId}`,{
+                method:"POST",
+                credentials:"include"
+            })
+            const res = await response.json();
+            setCart(res.items.data)
+        }
+        catch(err){
+            console.log("Error in Delete  Item from cart Api",err.message);
+        }
+        finally{
+            setUpdatingCartState(false)
+        }
+    }
 
     const sharedValues = {
         appLoading,
@@ -172,6 +189,7 @@ const AppContextProvider = ({ children }) => {
         cart,
         AddToCart,
         RemoveFromCart,
+        DeleteItemFromCart,
         updatingCartState,
         getCartItems,
         handleCheckout,
