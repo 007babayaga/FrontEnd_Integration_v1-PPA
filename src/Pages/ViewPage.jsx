@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router"
-import { Navbar } from "../Components/Navbar"
 import { useEffect, useState } from "react";
 import { Footer } from "../Components/Footer";
 import { LoadingSkeleton } from "../Components/ui/loadingSkeleton";
