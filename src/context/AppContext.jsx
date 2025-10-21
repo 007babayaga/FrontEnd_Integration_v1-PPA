@@ -52,29 +52,6 @@ const AppContextProvider = ({ children }) => {
         }
     }, [isLoggedIn]); 
 
-    const HandleLogout = async () => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {
-                method: "GET",
-                credentials: "include",
-            })
-            const res = await response.json();
-            if (response.status === 200) {
-                successToast("Logout Success!!")
-                setUser({ isLoggedIn: false })
-            }
-            else {
-                erorrToast(res.message);
-            }
-        }
-        catch (err) {
-            console.log("Error in Logout Api", err.message);
-        }
-        finally{
-            setAppLoading(false)
-        }
-    }
-
     const handleSetUser = (data) => {
         setUser(data)
     }
@@ -125,7 +102,6 @@ const AppContextProvider = ({ children }) => {
             })
             const res = await response.json();
             setCart(res.items.data)
-            
         }
         catch(err){
             console.log("Error in Remove Product Api",err.message);
@@ -135,7 +111,25 @@ const AppContextProvider = ({ children }) => {
         }
     };
 
-    const handleCheckout =async(address)=>{
+    const DeleteItemFromCart = async(cartItemId)=>{
+        try{
+            setUpdatingCartState(true);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/delete/${cartItemId}`,{
+                method:"POST",
+                credentials:"include"
+            })
+            const res = await response.json();
+            setCart(res.items.data)
+        }
+        catch(err){
+            console.log("Error in Delete  Item from cart Api",err.message);
+        }
+        finally{
+            setUpdatingCartState(false)
+        }
+    }
+
+    const handleCheckout = async(address)=>{
         try{
             setPlacingOrder(true)
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/orders`,{
@@ -162,30 +156,12 @@ const AppContextProvider = ({ children }) => {
             setPlacingOrder(false);
         }
     }
-    const DeleteItemFromCart = async(cartItemId)=>{
-        try{
-            setUpdatingCartState(true);
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/delete/${cartItemId}`,{
-                method:"POST",
-                credentials:"include"
-            })
-            const res = await response.json();
-            setCart(res.items.data)
-        }
-        catch(err){
-            console.log("Error in Delete  Item from cart Api",err.message);
-        }
-        finally{
-            setUpdatingCartState(false)
-        }
-    }
-
+    
     const sharedValues = {
         appLoading,
         isLoggedIn,
         user,
         handleSetUser,
-        HandleLogout,
         cart,
         AddToCart,
         RemoveFromCart,

@@ -3,7 +3,7 @@ import { Navbar } from "../Components/Navbar"
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { Paginator } from "../Components/Paginator";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Footer } from "../Components/Footer";
 import { successToast } from "../../utils/toastHelper";
 
@@ -116,7 +116,13 @@ const SearchPage = ()=>{
                                         ))}
                                     </div>
                                 </div>
-                                <h1 className="mt-3 font-medium">Stock:{ele.quantity}</h1>
+                                <div className="mt-3 font-medium">
+                                    {
+                                        (ele.quantity<1) ? <h1 className="text-red-500">Out Of Stock!</h1>
+                                        :
+                                        <h1>Stock:{ele.quantity}</h1>
+                                    }
+                                </div>
                                 <p className="text-gray-700">Price:{ele.price}</p>
                             </div>
                         )

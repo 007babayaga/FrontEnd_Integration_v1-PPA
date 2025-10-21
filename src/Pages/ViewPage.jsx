@@ -98,10 +98,13 @@ const ViewPage = () => {
                                         ₹{product.price?.toLocaleString()}
                                     </p>
 
-                                    <p className="text-gray-600 mb-6">
-                                        <span className="font-medium">In Stock:</span>{" "}
-                                        {product.quantity}
-                                    </p>
+                                    <div className="text-gray-600 mb-6">
+                                        {
+                                            (product.quantity<1) ? <h1 className="text-red-500">Out Of Stock!</h1>
+                                            :
+                                        <h2 className="font-medium">In Stock:{product.quantity}</h2>
+                                        }
+                                    </div>
 
                                     {/* Description */}
                                     <div className="mb-8">

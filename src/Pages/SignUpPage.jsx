@@ -121,7 +121,7 @@ const SignUpPage = () => {
                         <label className="text-blue-700 font-bold">
                             Enter Your Email
                         </label>
-                        <input className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full read-only:cursor-not-allowed "
+                        <input className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full read-only:cursor-not-allowed read-only:bg-gray-400 "
                             type="email"
                             required
                             placeholder="Enter Your Email"

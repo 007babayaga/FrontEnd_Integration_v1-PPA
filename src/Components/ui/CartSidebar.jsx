@@ -8,10 +8,7 @@ import { successToast } from "../../../utils/toastHelper";
 const CartSidebar = ()=>{
     const { cart, AddToCart, RemoveFromCart,updatingCartState,DeleteItemFromCart } = useAuthContext();
     const navigate = useNavigate();
-
-    // const HandleViewProduct = (productId)=>{
-    //     navigate(`/view/${productId}`);
-    // }
+    
     const handleCartView = ()=>{
         navigate("/cart")
     }

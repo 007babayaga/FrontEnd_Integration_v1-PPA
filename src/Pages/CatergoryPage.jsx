@@ -49,7 +49,7 @@ const CatergoryPage = () => {
                             {
                                 products.map((ele, idx) => (
                                     <div
-                                        className="p-4 bg-gray-100  rounded-md cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col items-center"
+                                        className="p-4 bg-gray-100  rounded-md cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col items-center "
                                         key={idx}
                                     >
                                         <img

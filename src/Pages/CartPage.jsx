@@ -8,12 +8,12 @@ import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 const CartPage = () => {
-    const { cart, handleCheckout,DeleteItemFromCart,updatingCartState } = useAuthContext();
+    const { cart, handleCheckout,DeleteItemFromCart,updatingCartState,placingOrder} = useAuthContext();
     const [address, setAddress] = useState("");
     const navigate = useNavigate();
 
-    const HandleOrderClick = () => {
-        handleCheckout(address);
+    const HandleOrderClick = async() => {
+        await handleCheckout(address);
     }
 
     const HanldeViewProduct = (productId)=>{
@@ -32,7 +32,17 @@ const CartPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
             <ToastContainer/>
-            <div className="max-w-6xl mx-auto">
+            {/* Loader Overlay */}
+            {placingOrder && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center gap-4">
+                        <ClipLoader size={40} color="#3B82F6" />
+                        <p className="text-lg font-semibold text-gray-700">Placing your order...</p>
+                    </div>
+                </div>
+            )}
+
+            <div className={`max-w-6xl mx-auto ${placingOrder ? 'blur-sm pointer-events-none' : ''}`}>
                 {/* Header */}
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold bg-black bg-clip-text text-transparent mb-4">
@@ -60,7 +70,7 @@ const CartPage = () => {
                                         <div className="relative">
                                             <img
                                             onClick={()=>{HanldeViewProduct(ele.product._id)}}
-                                                className="w-28 h-28 object-cover rounded-xl shadow-md group-hover:shadow-lg transition-shadow"
+                                                className="w-28 h-28 object-cover rounded-xl "
                                                 src={ele.product.images?.[0]}
                                                 alt={ele.title}
                                             />
@@ -140,7 +150,7 @@ const CartPage = () => {
                             </div>
                             <textarea 
                                 className="w-full px-4 py-3 bg-white/90 rounded-md border border-blue-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-                                onChange={(e) => { setAddress(e.target.value) }}
+                                onChange={(e) => {setAddress(e.target.value)}}
                                 required
                                 rows="4"
                                 placeholder="Enter your complete shipping address with PIN code..."
