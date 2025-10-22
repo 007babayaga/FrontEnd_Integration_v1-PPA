@@ -10,7 +10,7 @@ const erorrToast = (txt) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme:"colored",
         transition: Slide,
     });
 }
@@ -24,7 +24,7 @@ const successToast = (txt) => {
         draggable: true,
         progress: undefined,
         toastId: "uniqueId",
-        theme: "light",
+        theme:"colored",
         transition: Slide,
     });
 }
