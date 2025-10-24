@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { useEffect, useState } from "react";
-import { erorrToast, successToast } from "../../utils/toastHelper";
+import { errorToast, successToast } from "../../utils/toastHelper";
 
 
 const AuthContext = createContext();
@@ -146,7 +146,7 @@ const AppContextProvider = ({ children }) => {
                 setCart([]);
             }
             else{
-                erorrToast(res.message);
+                errorToast(res.message);
             }
         }
         catch(err){

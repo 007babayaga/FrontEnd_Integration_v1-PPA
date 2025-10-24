@@ -1,6 +1,6 @@
 import { Slide, toast } from "react-toastify";
 
-const erorrToast = (txt) => {
+const errorToast = (txt) => {
     toast.error(txt, {
         position: "top-right",
         autoClose: 2000,
@@ -28,4 +28,4 @@ const successToast = (txt) => {
         transition: Slide,
     });
 }
-export{erorrToast,successToast};
+export{errorToast,successToast};

@@ -12,6 +12,8 @@ import { BasicLayout } from "./Pages/BasicLayout";
 import { CatergoryPage } from "./Pages/CatergoryPage";
 import { UserInfoPage } from "./Pages/UserInfoPage";
 import { CartPage } from "./Pages/CartPage";
+import { ForgotPasswordPage } from "./Pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "./Pages/ResetPasswordpage";
 
 
 const AppRoutes = () => {
@@ -28,6 +30,8 @@ const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/resetPassword/:token" element={<ResetPasswordPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/category/:slug" element={<CatergoryPage />} />
           <Route path="/view/:productId" element={<ViewPage />} />

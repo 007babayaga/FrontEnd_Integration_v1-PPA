@@ -4,7 +4,7 @@ import { Link, useNavigate, useSearchParams,useLocation } from "react-router";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiMenu, FiX } from "react-icons/fi";
-import {  useEffect, useState } from "react";
+import {   useState } from "react";
 import {  useAuthContext } from "../context/AppContext";
 import { UserIcon } from "lucide-react";
 import { UserInfo } from "./UserInfo";
@@ -13,7 +13,7 @@ import { UserInfo } from "./UserInfo";
 
 const Navbar = () => {
     const location = useLocation();
-    const hideNavItems = ["/login", "/signUp"].includes(location.pathname);
+    const hideNavItems = ["/login", "/signUp","/forgot-password","/resetPassword/:token"].includes(location.pathname);
 
 
     const [query] = useSearchParams();

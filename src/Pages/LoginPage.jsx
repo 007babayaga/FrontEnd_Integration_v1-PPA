@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Footer } from "../Components/Footer";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { MoonLoader } from "react-spinners";
-import { erorrToast, successToast } from "../../utils/toastHelper";
+import { errorToast, successToast } from "../../utils/toastHelper";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { useAuthContext } from "../context/AppContext";
 import { ToastContainer } from "react-toastify";
+import { Button } from "../Components/ui/Button";
 
 const LoginPage = () => {
     const { handleSetUser } = useAuthContext();
@@ -42,7 +43,7 @@ const LoginPage = () => {
                 navigate(redirectUrl, { replace: true });
             }
             else {
-                erorrToast(res.message)
+                errorToast(res.message)
             }
         }
         catch (err) {
@@ -59,7 +60,7 @@ const LoginPage = () => {
             <div className={`flex pt-3 justify-center bg-gray-100 min-h-screen ${loading ? 'blur-sm' : ''} transition-all duration-300`}>
                 <ToastContainer />
                 <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}>
-                    <h2 className="text-2xl font-bold text-blue-800 mb-7">Login</h2>
+                    <h2 className="text-2xl font-bold text-black mb-7">Login</h2>
                     <div className="flex flex-col p-3 gap-2 w-full">
                         <label className="text-blue-700 font-bold">
                             Enter Your Email
@@ -81,18 +82,33 @@ const LoginPage = () => {
                             placeholder="Enter Your Password"
                             name="password" />
                         <span
-                            className="absolute right-3 top-3/5 -translate-y-1/5 -translate-3 cursor-pointer text-black"
+                            className="absolute pt-1 right-3 top-3/7 -translate-y-1/5 -translate-3 cursor-pointer text-black"
                             onClick={() => setshowPassword(!showPassword)}
                         >
                             {showPassword ? <IoMdEye size={20} /> : <IoMdEyeOff size={20} />}
                         </span>
+
+                        <Link className=" w-full tracking-wider flex justify-end" to="/forgot-password">Forgot Password?</Link>
                     </div>
-                    <button
-                        className="px-4 py-2 w-90 tracking-wider mt-6 bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    <div className="flex flex-col justify-center items-center gap-2">
+                        <button
+                        className="px-4 py-2 w-90 tracking-wider  bg-linear-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         type="submit"
                         disabled={loading}
                     >Login
                     </button>
+                    <span
+                    className="font-bold"
+                    >
+                    OR
+                    </span>
+                    <Button
+                    className="px-4 py-2 w-90 text-[15px] bg-gray-500 text-black hover:bg-gray-600 cursor-pointer "
+                    >
+                    Login With Google
+                    </Button>
+                    </div>
+                    
                     <div>
                         <Link className="font-bold w-full tracking-wider" to="/signUp">Don't have an Account? <span className="text-blue-700 text-decoration: underline">SignUp Here</span></Link>
                     </div>

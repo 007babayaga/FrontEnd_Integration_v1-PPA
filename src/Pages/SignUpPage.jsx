@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Footer } from "../Components/Footer";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { MoonLoader } from "react-spinners";
-import { erorrToast, successToast } from "../../utils/toastHelper";
+import { errorToast, successToast } from "../../utils/toastHelper";
 import { Link, useNavigate } from "react-router";
 import { ToastContainer } from "react-toastify";
 
@@ -55,16 +55,16 @@ const SignUpPage = () => {
             }
             else if (response.status == 409) {
                 const result = await response.json();
-                erorrToast(result.message)
+                errorToast(result.message)
                 navigate("/login");
             }
             else {
                 const result = await response.json();
-                erorrToast(result.message);
+                errorToast(result.message);
             }
         }
         catch (err) {
-            erorrToast(`Unable To SignUp${err.message}`);
+            errorToast(`Unable To SignUp${err.message}`);
         }
         finally {
             setSignUpUser(false);
@@ -90,11 +90,11 @@ const SignUpPage = () => {
             }
             else {
                 const result = await response.json();
-                erorrToast(result.message);
+                errorToast(result.message);
             }
         }
         catch (err) {
-            erorrToast(`unable to send Otp: ${err.message}`)
+            errorToast(`unable to send Otp: ${err.message}`)
         }
         finally {
             setOtpSending(false);
@@ -121,7 +121,7 @@ const SignUpPage = () => {
                         <label className="text-blue-700 font-bold">
                             Enter Your Email
                         </label>
-                        <input className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full read-only:cursor-not-allowed read-only:bg-gray-400 "
+                        <input className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full read-only:cursor-not-allowed read-only:bg-gray-300 "
                             type="email"
                             required
                             placeholder="Enter Your Email"
