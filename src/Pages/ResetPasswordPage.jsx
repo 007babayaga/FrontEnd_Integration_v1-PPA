@@ -146,9 +146,9 @@ const ResetPasswordPage = () => {
 
     // Show reset password form
     return (
-        <div  className="flex pt-3 justify-center bg-gray-100 min-h-screen relative">
+        <div  className="flex pt-3 justify-center bg-gray-100 min-h-screen relative ">
             <ToastContainer />
-            <div  className={`${loading ? "blur-sm" : ""} transition-all`}>
+            <div  className={`${loading ? "blur-sm" : " w-full max-w-md mx-4 mb-7"} transition-all`}>
             <form 
                 className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 my-7"
                 onSubmit={handleSubmit}
@@ -165,7 +165,7 @@ const ResetPasswordPage = () => {
                     <label htmlFor="password" className="text-blue-700 font-bold">New Password</label>
                     <input 
                         id="password"
-                        className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full border border-gray-300"
+                        className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full "
                         type="password"
                         required
                         placeholder="Enter new password"
@@ -180,7 +180,7 @@ const ResetPasswordPage = () => {
                     <label htmlFor="confirmPassword" className="text-blue-700 font-bold">Confirm Password</label>
                     <input 
                         id="confirmPassword"
-                        className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full border border-gray-300"
+                        className="px-4 py-2 bg-white/90 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full "
                         type="password"
                         required
                         placeholder="Confirm new password"

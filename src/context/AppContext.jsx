@@ -28,11 +28,11 @@ const AppContextProvider = ({ children }) => {
                 })
             }
             else {
-                erorrToast("Please Login First!!")
+                errorToast("Please Login First!!")
             }
         }
         catch (err) {
-            erorrToast(`Error in User Validation ${err.message}`)
+            errorToast(`Error in User Validation ${err.message}`)
         }
         finally {
             setAppLoading(false)
