@@ -78,7 +78,7 @@ const ForgotPasswordPage = () => {
                         <div className="text-green-600 text-lg font-semibold mb-4">✓ Check Your Email</div>
                         <p className="text-gray-600 mb-4">
                             If an account with that email exists, we've sent a password reset link. The link will
-                            expire in 1 hour. Please check your spam folder.
+                            expire in 10 min. Please check your spam folder.
                         </p>
                     </div>
                 )}

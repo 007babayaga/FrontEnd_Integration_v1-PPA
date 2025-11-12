@@ -30,9 +30,7 @@ const UserInfo = () => {
     const HandleLogout = async () => {
         try {
             setLoading(true);
-            // Kill any hover/focus transitions that might cause blur
-            document.activeElement?.blur();
-
+            
             const response = await fetch(
                 `${import.meta.env.VITE_BACKEND_URL}/auth/logout`,
                 {
