@@ -27,7 +27,7 @@ const HomePage = () => {
     const getItems = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?limit=9`, { // Reduced to 9 for better grid
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products?limit=9`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -53,7 +53,6 @@ const HomePage = () => {
         getItems();
     }, [])
 
-    // More minimalist, authentic images
     const images = [
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
         "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
@@ -63,14 +62,13 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % images.length);
-        }, 5000); // Slower transition
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
 
-    // More minimalist skeletons
     const ProductSkeleton = () => (
-        <div className="bg-white rounded-lg p-4 animate-pulse border border-gray-100">
-            <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
+        <div className="bg-white rounded-lg p-4 animate-pulse border border-gray-100 shadow-sm">
+            <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4"></div>
             <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
             <div className="h-4 bg-gray-200 rounded w-1/2 mb-3"></div>
             <div className="h-10 bg-gray-200 rounded"></div>
@@ -87,12 +85,11 @@ const HomePage = () => {
         <>
             <ToastContainer />
             
-            <div className="min-h-screen bg-white flex flex-col">
-                {/* Main Content */}
+            <div className="min-h-screen bg-gray-50 flex flex-col">
                 <div className="flex-1 w-full">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        {/* Minimal Hero Section */}
-                        <div className="text-center mb-12 p-3 bg-cyan-50 rounded-md ">
+                        {/* Hero - just better shadow */}
+                        <div className="text-center mb-9 p-8 bg-cyan-50 rounded-lg shadow-sm border border-cyan-100">
                             <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 tracking-tight">
                                 Welcome to <span className="font-semibold">TrueBuy</span>
                             </h1>
@@ -102,9 +99,9 @@ const HomePage = () => {
                         </div>
 
                         <div className="flex flex-col lg:flex-row gap-8">
-                            {/* Minimal Categories Sidebar */}
+                            {/* Categories - just shadow */}
                             <div className="lg:w-64 flex-shrink-0">
-                                <div className="bg-white rounded-lg p-6 border border-gray-100 sticky top-6">
+                                <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm sticky top-6">
                                     <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-100">
                                         Categories
                                     </h2>
@@ -133,10 +130,9 @@ const HomePage = () => {
                                 </div>
                             </div>
 
-                            {/* Main Content Area */}
                             <div className="flex-1 min-w-0">
-                                {/* Minimal Carousel */}
-                                <div className="relative overflow-hidden rounded-lg mb-8 bg-gray-50">
+                                {/* Carousel - just shadow */}
+                                <div className="relative overflow-hidden rounded-lg mb-8 bg-gray-50 shadow-md">
                                     <div className="relative h-64 md:h-80">
                                         <img
                                             src={images[currentIndex]}
@@ -151,7 +147,6 @@ const HomePage = () => {
                                         </div>
                                     </div>
                                     
-                                    {/* Simple Indicators */}
                                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                                         {images.map((_, index) => (
                                             <button
@@ -167,7 +162,6 @@ const HomePage = () => {
                                     </div>
                                 </div>
 
-                                {/* Featured Products */}
                                 <div id="products-section" className="mb-12">
                                     <div className="text-center mb-8">
                                         <h2 className="text-2xl font-light text-gray-900 mb-2">
@@ -178,7 +172,7 @@ const HomePage = () => {
                                         </p>
                                     </div>
 
-                                    {/* Clean Products Grid */}
+                                    {/* Products - just better shadow/hover */}
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {isLoading ? (
                                             Array.from({ length: 6 }).map((_, idx) => (
@@ -187,12 +181,11 @@ const HomePage = () => {
                                         ) : (
                                             items.map((ele, idx) => (
                                                 <div
-                                                    className="bg-white border border-gray-100 rounded-lg hover:shadow-sm transition-all duration-300 overflow-hidden group cursor-pointer"
+                                                    className="bg-white border border-gray-100 rounded-lg hover:shadow-lg transition-all duration-300 overflow-hidden group cursor-pointer"
                                                     key={idx}
                                                     onClick={() => HandleClickHome(ele._id)}
                                                 >
                                                     <div className="p-4">
-                                                        {/* Product Image */}
                                                         <div className="w-full h-48 mb-4 overflow-hidden rounded bg-gray-50 flex items-center justify-center">
                                                             <img
                                                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -204,7 +197,6 @@ const HomePage = () => {
                                                             />
                                                         </div>
                                                         
-                                                        {/* Product Info */}
                                                         <div className="space-y-3">
                                                             <h3 className="text-base font-normal text-gray-900 line-clamp-2 leading-relaxed">
                                                                 {ele.title}
@@ -230,7 +222,6 @@ const HomePage = () => {
                                                                 )}
                                                             </div>
 
-                                                            {/* Subtle Button */}
                                                             <button
                                                                 onClick={(e) => {
                                                                     e.stopPropagation();
@@ -248,8 +239,8 @@ const HomePage = () => {
                                     </div>
                                 </div>
 
-                                {/* Value Proposition Section */}
-                                <div className="bg-gray-50 rounded-lg p-8 mb-8">
+                                {/* Value section - unchanged */}
+                                <div className="bg-gray-50 rounded-lg p-8 mb-8 shadow-sm">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                                         <div className="space-y-3">
                                             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
@@ -279,7 +270,6 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                {/* Footer */}
                 <Footer />
             </div>
         </>

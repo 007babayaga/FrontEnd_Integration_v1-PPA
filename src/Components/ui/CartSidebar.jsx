@@ -84,7 +84,7 @@ const CartSidebar = ()=>{
                             <div className="flex justify-center m-6">
                                 <Button 
                                 onClick={handleCartView}
-                                className="px-3 py-2 bg-red-500 hover:bg-red-600">
+                                className="px-8 py-2 bg-gray-500 hover:bg-gray-600">
                                 CheckOut
                                 </Button>
                             </div>

@@ -6,7 +6,7 @@ import { errorToast, successToast } from "../../utils/toastHelper";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { useAuthContext } from "../context/AppContext";
 import { ToastContainer } from "react-toastify";
-import { Button } from "../Components/ui/Button";
+import GoogleLogo from "../Assets/Google Logo.jpg";
 
 const LoginPage = () => {
     const { handleSetUser } = useAuthContext();
@@ -59,7 +59,8 @@ const LoginPage = () => {
         <>
             <div className={`flex pt-3 justify-center bg-gray-100 min-h-screen ${loading ? 'blur-sm' : ''} transition-all duration-300`}>
                 <ToastContainer />
-                <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]" onSubmit={HandleSubmit}>
+                <form className="flex flex-col items-center justify-center p-8 gap-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 mb-7 transition-all hover:scale-[1.01]"
+                    onSubmit={HandleSubmit}>
                     <h2 className="text-2xl font-bold text-black mb-7">Login</h2>
                     <div className="flex flex-col p-3 gap-2 w-full">
                         <label className="text-blue-700 font-bold">
@@ -90,25 +91,36 @@ const LoginPage = () => {
 
                         <Link className=" w-full tracking-wider flex justify-end" to="/forgot-password">Forgot Password?</Link>
                     </div>
-                    <div className="flex flex-col justify-center items-center gap-2">
+                    <div className="flex flex-col justify-center items-center gap-4 w-full">
+                        {/* Login Button */}
                         <button
-                        className="px-4 py-2 w-90 tracking-wider  bg-linear-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                        type="submit"
-                        disabled={loading}
-                    >Login
-                    </button>
-                    <span
-                    className="font-bold"
-                    >
-                    OR
-                    </span>
-                    <Button
-                    className="px-4 py-2 w-90 text-[15px] bg-gray-500 text-black hover:bg-gray-600 cursor-pointer "
-                    >
-                    Login With Google
-                    </Button>
+                            className="px-4 py-2 w-full bg-gradient-to-r from-[#1138b8] to-blue-600 rounded-md text-white font-medium hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed text-base sm:text-lg"
+                            type="submit"
+                            disabled={loading}
+                        >
+                            Login
+                        </button>
+
+                        {/* OR Separator */}
+                        <div className="relative w-full flex justify-center items-center">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-gray-300"></div>
+                            </div>
+                            <span className="relative bg-white px-3 text-sm font-bold text-gray-600">
+                                OR
+                            </span>
+                        </div>
+
+                        {/* Google Login Button */}
+                        <div className="w-full border border-blue-300 flex justify-center items-center rounded-md px-4 py-2 hover:cursor-pointer transition-all hover:scale-105 duration-300">
+                            <div className="flex justify-center items-center gap-3">
+                                <img className="h-6 sm:h-7" src={GoogleLogo} alt="Sign in with Google" />
+                                <p className="text-sm sm:text-base font-medium text-gray-700">
+                                    Login With Google
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    
                     <div>
                         <Link className="font-bold w-full tracking-wider" to="/signUp">Don't have an Account? <span className="text-blue-700 text-decoration: underline">SignUp Here</span></Link>
                     </div>
